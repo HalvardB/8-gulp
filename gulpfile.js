@@ -43,8 +43,9 @@ gulp.task('images', function (done) {
 });
 
 // Clean command - deleting dist folder.
-gulp.task("clean", function(){
+gulp.task("clean", function(done){
   del("dist");
+  done();
 });
 
 // Build command
@@ -61,11 +62,13 @@ gulp.task('scss-watch', ['styles'], function () {
 gulp.task('default', ['build'], function () {
 
   // Launching the project in the browser automatically
-  browserSync.init({
-    server: {
-      baseDir: "./"
-    }
-  });
+  setTimeout(function(){
+    browserSync.init({
+      server: {
+        baseDir: "./"
+      }
+    });
+  }, 1000); // To make sure the css file is ready
 
   // Watch SCSS files for changes.
   gulp.watch("sass/**/*.sass", ['scss-watch']);
