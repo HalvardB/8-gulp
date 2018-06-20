@@ -12,17 +12,18 @@ const browserSync = require('browser-sync').create();
 const runSequence = require('run-sequence');
 
 // Concatinate and minify JavaScript files
-gulp.task("scripts", function(){
+gulp.task("scripts", function(done){
   return gulp.src("./js/**/*.js")
     .pipe(maps.init())
     .pipe(concat("all.min.js"))
     .pipe(minify())
     .pipe(maps.write("./"))
     .pipe(gulp.dest("./dist/scripts"));
+  done();
 });
 
 // Compiling SCSS files into CSS, then concat and minify
-gulp.task("styles", function(){
+gulp.task("styles", function(done){
   return gulp.src(['sass/global.scss','sass/_variables.scss'])
     .pipe(maps.init())
     .pipe(sass())
@@ -30,13 +31,15 @@ gulp.task("styles", function(){
     .pipe(cleanCSS())
     .pipe(maps.write("./"))
     .pipe(gulp.dest("./dist/styles"));
+  done();
 });
 
 // Image command - minifying images
-gulp.task('images', function () {
+gulp.task('images', function (done) {
   return gulp.src('images/*')
     .pipe(imagemin())
     .pipe(gulp.dest('dist/content'));
+  done();
 });
 
 // Clean command - deleting dist folder.
